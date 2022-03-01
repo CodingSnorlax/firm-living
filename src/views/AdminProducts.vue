@@ -1,0 +1,9 @@
+<template>
+  <h2>後台產品列表</h2>
+  <ul>
+    <li>產品1</li>
+    <li>產品2</li>
+    <li>產品3</li>
+    <li>產品4</li>
+  </ul>
+</template>

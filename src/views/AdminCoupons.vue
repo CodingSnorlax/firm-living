@@ -1,0 +1,10 @@
+<template>
+  <h1>後台優惠券管理</h1>
+  <ul>
+    <li>優惠券</li>
+    <li>優惠券</li>
+    <li>優惠券</li>
+    <li>優惠券</li>
+    <li>優惠券</li>
+  </ul>
+</template>
