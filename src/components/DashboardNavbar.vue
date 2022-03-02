@@ -20,7 +20,12 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <router-link class="nav-link" to="/admin/adminProducts"
-              >後台產品</router-link
+              >後台產品列表</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/admin/adminOrders"
+              >後台訂單管理</router-link
             >
           </li>
           <li class="nav-item">
@@ -31,13 +36,13 @@
         </ul>
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link class="nav-link" to="/">前台</router-link>
+            <router-link class="nav-link" to="/">回到前台</router-link>
           </li>
           <li>
             <button
               class="btn btn-outline-light"
               type="submit"
-              @click="signout"
+              @click.prevent="signout"
             >
               登出
             </button>
@@ -51,18 +56,12 @@
 
 <script>
 export default {
-  signout () {
-    console.log(`${process.env.VUE_APP_API}/v2/logout`)
-    this.$http
-      .post(`${process.env.VUE_APP_API}/v2/logout`)
-      .then((res) => {
-        console.log(res)
-        console.log('test1')
-      })
-      .catch((err) => {
-        console.log(err)
-        console.log('test2')
-      })
+  methods: {
+    signout () {
+      document.cookie = 'karenzToken=; expires=;'
+      alert('已登出')
+      this.$router.push('/login')
+    }
   }
 }
 </script>

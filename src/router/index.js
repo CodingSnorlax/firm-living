@@ -43,6 +43,10 @@ const routes = [
         component: () => import('../views/AdminProducts.vue')
       },
       {
+        path: '/admin/adminOrders',
+        component: () => import('../views/AdminOrders.vue')
+      },
+      {
         path: '/admin/adminCoupons',
         component: () => import('../views/AdminCoupons.vue')
       }
