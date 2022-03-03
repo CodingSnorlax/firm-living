@@ -1,21 +1,40 @@
 <template>
   <div class="log-form">
     <h2>後台管理系統</h2>
-    <form>
-      <input
-        type="text"
-        title="帳號"
-        placeholder="帳號"
-        v-model="user.username"
-      />
-      <input
-        type="password"
-        title="密碼"
-        placeholder="密碼"
-        v-model="user.password"
-      />
-      <button type="submit" class="btn" @click="login">登入</button>
-    </form>
+    <Form ref="form" class="col-md-6" v-slot="{ errors }">
+      <div class="mb-4">
+        <Field
+          type="text"
+          title="帳號"
+          placeholder="帳號"
+          name="帳號"
+          :class="{ 'is-invalid': errors['帳號'] }"
+          rules="required"
+          v-model="user.username"
+        />
+        <ErrorMessage name="帳號" class="invalid-feedback"></ErrorMessage>
+      </div>
+      <div class="mb-4">
+        <Field
+          type="password"
+          title="密碼"
+          placeholder="密碼"
+          name="密碼"
+          :class="{ 'is-invalid': errors['密碼'] }"
+          rules="required"
+          v-model="user.password"
+        />
+        <ErrorMessage name="密碼" class="invalid-feedback"></ErrorMessage>
+      </div>
+      <button
+        type="submit"
+        class="btn"
+        @click="login"
+      >
+        登入
+      </button>
+      <button type="button" class="btn btn-primary">回首頁</button>
+    </Form>
   </div>
 </template>
 

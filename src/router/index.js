@@ -25,6 +25,10 @@ const routes = [
       {
         path: 'cart',
         component: () => import('../views/CartView.vue')
+      },
+      {
+        path: 'checkout',
+        component: () => import('../views/CheckoutView.vue')
       }
     ]
   },

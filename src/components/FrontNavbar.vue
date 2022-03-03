@@ -23,16 +23,14 @@
           </li>
         </ul>
         <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item me-2">
+          <li class="nav-item me-4">
             <router-link class="nav-link" to="/cart">購物車</router-link>
           </li>
-          <li class="nav-item me-2">
-            <router-link type="button" class="btn btn-dark text-light me-2" to="/login">登入</router-link>
-          </li>
-          <li>
-            <button
+          <li class="nav-item me-4">
+            <router-link
               type="button"
               class="btn btn-primary position-relative me-2"
+              to="/checkout"
             >
               結帳
               <span
@@ -40,7 +38,10 @@
               >
                 {{ cartData?.carts?.length }}
               </span>
-            </button>
+            </router-link>
+          </li>
+          <li class="nav-item me-4">
+            <router-link type="button" class="btn btn-dark text-light me-2" to="/login">登入</router-link>
           </li>
         </ul>
       </div>
