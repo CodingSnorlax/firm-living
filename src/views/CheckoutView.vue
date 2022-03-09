@@ -20,7 +20,7 @@
           </thead>
           <tbody>
             <tr>
-              <th>折價券</th>
+              <th>總計</th>
               <th></th>
               <th></th>
               <th>$ 0</th>
