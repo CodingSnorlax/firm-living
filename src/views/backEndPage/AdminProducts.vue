@@ -37,7 +37,11 @@
               >
                 編輯
               </button>
-              <button type="button" class="btn btn-outline-danger btn-sm">
+              <button
+                type="button"
+                class="btn btn-outline-danger btn-sm"
+                @click="openModal('delete', product)"
+              >
                 刪除
               </button>
             </div>
@@ -45,15 +49,24 @@
         </tr>
       </tbody>
     </table>
+    <!-- 產品分頁元件 -->
     <dashboard-pagination
       :pages="pagination"
       @get-product="getProductData"
     ></dashboard-pagination>
+    <!-- 新增、修改商品 modal -->
     <product-modal
       :tempProductData="tempProductData"
       :isNew="isNew"
       :productModal="productModal"
+      @get-product="getProductData"
     ></product-modal>
+    <!-- 刪除商品 modal -->
+    <delete-modal
+      :tempProductData="tempProductData"
+      :deleteModal="deleteModal"
+      @get-product="getProductData"
+    ></delete-modal>
   </div>
 </template>
 
@@ -62,8 +75,9 @@
 import BsProductModal from 'bootstrap/js/dist/modal'
 
 // 自己的元件
-import productModal from '../components/ProductModal.vue'
-import dashboardPagination from '../components/DashboardPagination.vue'
+import productModal from '../../components/ProductModal.vue'
+import deleteModal from '../../components/DeleteModal.vue'
+import dashboardPagination from '../../components/DashboardPagination.vue'
 
 export default {
   data () {
@@ -73,7 +87,9 @@ export default {
         imagesUrl: []
       },
       isNew: true,
+      // 引入 BS 元件
       productModal: {},
+      deleteModal: {},
       pagination: {}
     }
   },
@@ -95,27 +111,34 @@ export default {
     openModal (status, product) {
       if (status === 'isNew') {
         /* eslint-disable */
-        this.tempProductData = {
+        ;(this.tempProductData = {
           imagesUrl: []
-        },
-        this.isNew = true,
-        this.productModal.show()
+        }),
+          (this.isNew = true),
+          this.productModal.show()
       } else if (status === 'edit') {
         this.tempProductData = JSON.parse(JSON.stringify(product))
         this.isNew = false
         this.productModal.show()
+      } else if (status === 'delete') {
+        this.tempProductData = { ...product }
+        this.deleteModal.show()
       }
     }
   },
   components: {
     productModal,
+    deleteModal,
     dashboardPagination
   },
-  mounted () {
+  mounted() {
+    this.getProductData()
     this.productModal = new BsProductModal(
       document.getElementById('productModal')
     )
-    this.getProductData()
+    this.deleteModal = new BsProductModal(
+      document.getElementById('deleteModal')
+    )
   }
 }
 </script>

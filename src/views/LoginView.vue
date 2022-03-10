@@ -1,7 +1,7 @@
 <template>
   <div class="log-form">
     <h2>後台管理系統</h2>
-    <Form ref="form" class="col-md-6" v-slot="{ errors }">
+    <Form ref="form" class="col-md-6" @submit="login" v-slot="{ errors }">
       <div class="mb-4">
         <Field
           type="text"
@@ -29,8 +29,8 @@
       <button
         type="submit"
         class="btn"
-        @click="login"
       >
+      <!-- 如果button上面是@click="login" 而不到form上面寫@submit為何不行?-->
         登入
       </button>
       <button type="button" class="btn btn-primary">回首頁</button>

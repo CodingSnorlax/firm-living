@@ -234,33 +234,20 @@ export default {
   },
   methods: {
     updateProductData () {
-      this.$http
-        .put(
-          `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProductData.id}`
-        )
+      let url = `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/admin/product`
+      let method = 'post'
+      if (this.isNew === false) {
+        url = `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProductData.id}`
+        method = 'put'
+      }
+      this.$http[method](url, { data: this.tempProductObj })
         .then((res) => {
-          console.log(res, 'ok')
-          this.$emit('get-products')
+          this.$emit('get-product')
           this.productModal.hide()
         })
         .catch((err) => {
           console.log(err)
         })
-      // let url = `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/admin/product`
-      // let method = 'post'
-      // if (this.isNew === false) {
-      //   url = `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProductData.id}`
-      //   method = 'put'
-      // }
-      // // Q: 為什麼這邊送出的 data 是 props 的，不是 watch 的？
-      // this.$http[method](url, { data: this.tempProductData })
-      //   .then((res) => {
-      //     console.log(res)
-      //     this.productModal.hide()
-      //   })
-      //   .catch((err) => {
-      //     console.log(err)
-      //   })
     }
   }
 }
