@@ -63,7 +63,7 @@
     ></product-modal>
     <!-- 刪除商品 modal -->
     <delete-modal
-      :tempProductData="tempProductData"
+      :itemData="tempProductData"
       :deleteModal="deleteModal"
       @get-product="getProductData"
     ></delete-modal>

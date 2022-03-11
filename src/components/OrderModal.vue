@@ -1,7 +1,7 @@
 <template>
   <div
     class="modal fade"
-    id="productModal"
+    id="orderModal"
     tabindex="-1"
     role="dialog"
     aria-labelledby="exampleModalLabel"
@@ -26,22 +26,22 @@
             <div class="col-md-4">
               <h3>用戶資料</h3>
               <table class="table">
-                <tbody v-if="tempOrder.user">
+                <tbody v-if="tempOrderObj.user">
                   <tr>
                     <th style="width: 100px">姓名</th>
-                    <td>{{ tempOrder.user.name }}</td>
+                    <td>{{ tempOrderObj.user.name }}</td>
                   </tr>
                   <tr>
                     <th>Email</th>
-                    <td>{{ tempOrder.user.email }}</td>
+                    <td>{{ tempOrderObj.user.email }}</td>
                   </tr>
                   <tr>
                     <th>電話</th>
-                    <td>{{ tempOrder.user.tel }}</td>
+                    <td>{{ tempOrderObj.user.tel }}</td>
                   </tr>
                   <tr>
                     <th>地址</th>
-                    <td>{{ tempOrder.user.address }}</td>
+                    <td>{{ tempOrderObj.user.address }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -52,17 +52,17 @@
                 <tbody>
                   <tr>
                     <th style="width: 100px">訂單編號</th>
-                    <td>{{ tempOrder.id }}</td>
+                    <td>{{ tempOrderObj.id }}</td>
                   </tr>
                   <tr>
                     <th>下單時間</th>
-                    <td>{{ $filters.date(tempOrder.create_at) }}</td>
+                    <td>{{ $filters.date(tempOrderObj.create_at) }}</td>
                   </tr>
                   <tr>
                     <th>付款時間</th>
                     <td>
-                      <span v-if="tempOrder.paid_date">
-                        {{ $filters.date(tempOrder.paid_date) }}
+                      <span v-if="tempOrderObj.paid_date">
+                        {{ $filters.date(tempOrderObj.paid_date) }}
                       </span>
                       <span v-else>時間不正確</span>
                     </td>
@@ -70,7 +70,7 @@
                   <tr>
                     <th>付款狀態</th>
                     <td>
-                      <strong v-if="tempOrder.is_paid" class="text-success"
+                      <strong v-if="tempOrderObj.is_paid" class="text-success"
                         >已付款</strong
                       >
                       <span v-else class="text-muted">尚未付款</span>
@@ -79,7 +79,7 @@
                   <tr>
                     <th>總金額</th>
                     <td>
-                      {{ $filters.currency(tempOrder.total) }}
+                      {{ $filters.currency(tempOrderObj.total) }}
                     </td>
                   </tr>
                 </tbody>
@@ -90,7 +90,7 @@
                   <tr></tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in tempOrder.products" :key="item.id">
+                  <tr v-for="item in tempOrderObj.products" :key="item.id">
                     <th>
                       {{ item.product.title }}
                     </th>
@@ -108,10 +108,10 @@
                     type="checkbox"
                     value=""
                     id="flexCheckDefault"
-                    v-model="tempOrder.is_paid"
+                    v-model="tempOrderObj.is_paid"
                   />
                   <label class="form-check-label" for="flexCheckDefault">
-                    <span v-if="tempOrder.is_paid">已付款</span>
+                    <span v-if="tempOrderObj.is_paid">已付款</span>
                     <span v-else>未付款</span>
                   </label>
                 </div>
@@ -130,7 +130,7 @@
           <button
             type="button"
             class="btn btn-primary"
-            @click="$emit('update-paid', tempOrder)"
+            @click="$emit('update-paid', tempOrderObj)"
           >
             修改付款狀態
           </button>
@@ -140,29 +140,20 @@
   </div>
 </template>
 <script>
-import modalMixin from '@/mixins/modalMixin';
+import modalMixin from '../mixins/modalMixin.js'
 export default {
-  props: {
-    order: {
-      type: Object,
-      default() { return {}; },
-    },
-  },
-  data() {
+  props: ['order'],
+  mixins: [modalMixin],
+  data () {
     return {
       status: {},
-      modal: '',
-      tempOrder: {},
-      isPaid: false,
-    };
+      tempOrderObj: {}
+    }
   },
-  emits: ['update-paid'],
-  mixins: [modalMixin],
-  inject: ['emitter'],
   watch: {
-    order() {
-      this.tempOrder = this.order;
-    },
-  },
-};
+    order () {
+      this.tempOrderObj = this.order
+    }
+  }
+}
 </script>

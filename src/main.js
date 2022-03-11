@@ -10,6 +10,8 @@ import AllRules from '@vee-validate/rules'
 import { localize, setLocale } from '@vee-validate/i18n'
 // 繁中
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
+// 載入自訂的 filters
+import { date, currency } from '../src/methods/filters'
 
 import App from './App.vue'
 import router from './router'
@@ -29,10 +31,15 @@ configure({
 // 設定預設語系
 setLocale('zh_TW')
 
-createApp(App)
-  .use(router)
-  .use(VueAxios, axios) // axios
-  .component('Form', Form)
-  .component('Field', Field)
-  .component('ErrorMessage', ErrorMessage)
-  .mount('#app')
+const app = createApp(App)
+// 載入自訂義 filters
+app.config.globalProperties.$filters = {
+  date,
+  currency
+}
+app.use(router)
+app.use(VueAxios, axios) // axios
+app.component('Form', Form)
+app.component('Field', Field)
+app.component('ErrorMessage', ErrorMessage)
+app.mount('#app')

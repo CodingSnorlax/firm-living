@@ -23,7 +23,7 @@
         </div>
         <div class="modal-body">
           是否刪除
-          <strong class="text-danger">{{ tempProductData.title }}</strong>
+          <strong class="text-danger">{{ tempProductObj.title }}</strong>
           商品(刪除後將無法恢復)。
         </div>
         <div class="modal-footer">
@@ -45,15 +45,15 @@
 
 <script>
 export default {
-  props: ['tempProductData', 'deleteModal'],
+  props: ['itemData', 'deleteModal'],
   data () {
     return {
       tempProductObj: {}
     }
   },
   watch: {
-    tempProductData () {
-      this.tempProductObj = this.tempProductData
+    itemData () {
+      this.tempProductObj = this.itemData
     }
   },
   methods: {
