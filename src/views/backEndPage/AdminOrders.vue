@@ -12,31 +12,31 @@
         </tr>
       </thead>
       <tbody>
-        <template v-for="order in tempOrderData" :key="order.id">
+        <template v-for="item in orders" :key="item.id">
           <!-- {{order}} -->
-          <tr v-if="tempOrderData.length">
-            <td>{{ $filters.date(order.create_at) }}</td>
+          <tr v-if="orders.length">
+            <td>{{ $filters.date(item.create_at) }}</td>
             <td>
-              <span> {{ order.user.email }} </span>
+              <span> {{ item.user.email }} </span>
             </td>
             <td>
               <ul class="px-0">
                 <li
                   class="list-unstyled"
-                  v-for="(item, index) in order.products"
+                  v-for="(singleItem, index) in item.products"
                   :key="index"
                 >
-                  {{ item.product.title }} / 數量：{{ item.qty }}
-                  {{ item.product.unit }}
+                  {{ singleItem.product.title }} / 數量：{{ singleItem.qty }}
+                  {{ singleItem.product.unit }}
                 </li>
               </ul>
             </td>
-            <td class="text-right">{{ order.total }}</td>
+            <td class="text-right">{{ item.total }}</td>
             <td>
               <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" />
                 <label class="form-check-label">
-                  <span v-if="order.is_paid === true">已付款</span>
+                  <span v-if="item.is_paid === true">已付款</span>
                   <span v-else>未付款</span>
                 </label>
               </div>
@@ -46,14 +46,14 @@
                 <button
                   class="btn btn-outline-primary btn-sm"
                   type="button"
-                  @click="openOrderModal('checkOrder', order)"
+                  @click="openOrderModal('checkOrder', item)"
                 >
                   檢視
                 </button>
                 <button
                   class="btn btn-outline-danger btn-sm"
                   type="button"
-                  @click="openOrderModal('deleteOrder', order)"
+                  @click="openOrderModal('deleteOrder', item)"
                 >
                   刪除
                 </button>
@@ -90,6 +90,9 @@ import DeleteModal from '../../components/DeleteModal.vue'
 export default {
   data () {
     return {
+      // 原始的完整資料
+      orders: {},
+      // 複製給 modal 用的資料
       tempOrderData: {},
       pagination: {},
       // 引入 BS 元件
@@ -109,19 +112,19 @@ export default {
           `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/admin/orders/?page=${currentPage}`
         )
         .then((res) => {
-          this.tempOrderData = res.data.orders
+          this.orders = res.data.orders
           this.pagination = res.data.pagination
         })
         .catch((err) => {
           console.log(err.data)
         })
     },
-    openOrderModal (status, tempOrder) {
+    openOrderModal (status, tempOrderObj) {
       if (status === 'checkOrder') {
-        this.tempOrderData = { ...tempOrder }
+        this.tempOrderData = { ...tempOrderObj }
         this.OrderModal.show()
-      } else {
-        this.tempOrderData = { ...tempOrder }
+      } else if (status === 'deleteOrder') {
+        this.tempOrderData = { ...tempOrderObj }
         this.DeleteModal.show()
       }
     }
