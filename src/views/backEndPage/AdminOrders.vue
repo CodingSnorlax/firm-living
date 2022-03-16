@@ -64,7 +64,7 @@
       </tbody>
     </table>
     <!-- 檢視訂單 order modal -->
-    <order-modal :order="tempOrderData"></order-modal>
+    <order-modal :order="tempOrderData" :orderModal="OrderModal" @get-order-data="getOrderData"></order-modal>
     <!-- 刪除訂單 delete modal  -->
     <delete-modal
       :itemData="tempOrderData"
@@ -106,6 +106,7 @@ export default {
     DeleteModal
   },
   methods: {
+    // 取得訂單資料
     getOrderData (currentPage = 1) {
       this.$http
         .get(

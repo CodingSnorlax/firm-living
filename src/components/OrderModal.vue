@@ -130,7 +130,7 @@
           <button
             type="button"
             class="btn btn-primary"
-            @click="$emit('update-paid', tempOrderObj)"
+            @click="updatePaidData"
           >
             修改付款狀態
           </button>
@@ -141,8 +141,9 @@
 </template>
 <script>
 import modalMixin from '../mixins/modalMixin.js'
+
 export default {
-  props: ['order'],
+  props: ['order', 'orderModal'],
   mixins: [modalMixin],
   data () {
     return {
@@ -153,6 +154,24 @@ export default {
   watch: {
     order () {
       this.tempOrderObj = this.order
+    }
+  },
+  methods: {
+    // 修改訂單資料
+    updatePaidData () {
+      this.$http
+        .put(
+          `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/admin/order/${this.tempOrderObj.id}`,
+          { data: this.tempOrderObj }
+        )
+        .then((res) => {
+          console.log(res)
+          this.orderModal.hide()
+          this.$emit('get-order-data')
+        })
+        .catch((err) => {
+          console.log(err.data)
+        })
     }
   }
 }
