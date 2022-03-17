@@ -32,6 +32,7 @@
               </ul>
             </td>
             <td class="text-right">{{ item.total }}</td>
+            <!-- switch toggle -->
             <td>
               <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" />
@@ -41,6 +42,7 @@
                 </label>
               </div>
             </td>
+            <!-- switch toggle -->
             <td>
               <div class="btn-group">
                 <button
@@ -64,12 +66,17 @@
       </tbody>
     </table>
     <!-- 檢視訂單 order modal -->
-    <order-modal :order="tempOrderData" :orderModal="OrderModal" @get-order-data="getOrderData"></order-modal>
+    <order-modal
+      :order="tempOrderData"
+      :orderModal="OrderModal"
+      @get-order-data="getOrderData"
+    ></order-modal>
     <!-- 刪除訂單 delete modal  -->
-    <delete-modal
+    <delete-order-modal
       :itemData="tempOrderData"
-      :deleteModal="DeleteModal"
-    ></delete-modal>
+      :deleteOrderModal="DeleteOrderModal"
+      @get-order-data="getOrderData"
+    ></delete-order-modal>
     <!-- 產品分頁元件 -->
     <dashboard-pagination
       :pages="pagination"
@@ -85,7 +92,7 @@ import BsProductModal from 'bootstrap/js/dist/modal'
 // 引入自己的元件
 import DashboardPagination from '../../components/DashboardPagination.vue'
 import OrderModal from '../../components/OrderModal.vue'
-import DeleteModal from '../../components/DeleteModal.vue'
+import DeleteOrderModal from '../../components/DeleteOrderModal.vue'
 
 export default {
   data () {
@@ -95,15 +102,15 @@ export default {
       // 複製給 modal 用的資料
       tempOrderData: {},
       pagination: {},
-      // 引入 BS 元件
+      // 引入自己寫的 BS 元件
       OrderModal: {},
-      DeleteModal: {}
+      DeleteOrderModal: {}
     }
   },
   components: {
     DashboardPagination,
     OrderModal,
-    DeleteModal
+    DeleteOrderModal
   },
   methods: {
     // 取得訂單資料
@@ -126,15 +133,15 @@ export default {
         this.OrderModal.show()
       } else if (status === 'deleteOrder') {
         this.tempOrderData = { ...tempOrderObj }
-        this.DeleteModal.show()
+        this.DeleteOrderModal.show()
       }
     }
   },
   mounted () {
     this.getOrderData()
     this.OrderModal = new BsProductModal(document.getElementById('orderModal'))
-    this.DeleteModal = new BsProductModal(
-      document.getElementById('deleteModal')
+    this.DeleteOrderModal = new BsProductModal(
+      document.getElementById('deleteOrderModal')
     )
   }
 }
