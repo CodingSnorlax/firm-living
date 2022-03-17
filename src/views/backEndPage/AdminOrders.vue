@@ -34,6 +34,8 @@
             <!-- switch toggle -->
             <td>
               <div class="form-check form-switch">
+                <!-- 在本地端可以正常切換？ -->
+                <span>test</span>
                 <input
                   class="form-check-input"
                   type="checkbox"
