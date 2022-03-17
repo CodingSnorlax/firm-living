@@ -35,7 +35,12 @@
             <!-- switch toggle -->
             <td>
               <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" />
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  v-model="item.is_paid"
+                  @change="updatePaid(item)"
+                />
                 <label class="form-check-label">
                   <span v-if="item.is_paid === true">已付款</span>
                   <span v-else>未付款</span>
@@ -104,7 +109,9 @@ export default {
       pagination: {},
       // 引入自己寫的 BS 元件
       OrderModal: {},
-      DeleteOrderModal: {}
+      DeleteOrderModal: {},
+      // toggle 狀態
+      isEnabled: true
     }
   },
   components: {
