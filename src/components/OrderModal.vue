@@ -149,7 +149,7 @@ export default {
   },
   watch: {
     order () {
-      this.tempOrderObj = this.order
+      this.tempOrderObj = JSON.parse(JSON.stringify(this.order))
     }
   },
   methods: {
