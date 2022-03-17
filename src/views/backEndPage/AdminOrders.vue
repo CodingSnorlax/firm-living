@@ -20,9 +20,8 @@
               <span> {{ item.user.email }} </span>
             </td>
             <td>
-              <ul class="px-0">
+              <ul class="px-0 list-unstyled">
                 <li
-                  class="list-unstyled"
                   v-for="(singleItem, index) in item.products"
                   :key="index"
                 >
