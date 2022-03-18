@@ -39,6 +39,8 @@
                 <input
                   class="form-check-input"
                   type="checkbox"
+                  v-model="item.is_paid"
+                  @change="updatePaid(item)"
                 />
                 <label class="form-check-label">
                   <span v-if="item.is_paid === true">已付款</span>
