@@ -21,10 +21,7 @@
             </td>
             <td>
               <ul class="px-0 list-unstyled">
-                <li
-                  v-for="(singleItem, index) in item.products"
-                  :key="index"
-                >
+                <li v-for="(singleItem, index) in item.products" :key="index">
                   {{ singleItem.product.title }} / 數量：{{ singleItem.qty }}
                   {{ singleItem.product.unit }}
                 </li>
@@ -34,13 +31,11 @@
             <!-- switch toggle -->
             <td>
               <div class="form-check form-switch">
-                <!-- 在本地端可以正常切換？ -->
-                <span>test</span>
                 <input
                   class="form-check-input"
                   type="checkbox"
                   v-model="item.is_paid"
-                  @change="updatePaid(item)"
+                  @change="switchPaidStatus(item)"
                 />
                 <label class="form-check-label">
                   <span v-if="item.is_paid === true">已付款</span>
@@ -73,6 +68,7 @@
     </table>
     <!-- 檢視訂單 order modal -->
     <order-modal
+      ref="orderModal"
       :order="tempOrderData"
       :orderModal="OrderModal"
       @get-order-data="getOrderData"
@@ -112,7 +108,7 @@ export default {
       OrderModal: {},
       DeleteOrderModal: {},
       // toggle 狀態
-      isEnabled: true
+      isPaid: true
     }
   },
   components: {
@@ -121,6 +117,9 @@ export default {
     DeleteOrderModal
   },
   methods: {
+    switchPaidStatus () {
+      this.$refs.orderModal.updatePaidData()
+    },
     // 取得訂單資料
     getOrderData (currentPage = 1) {
       this.$http
